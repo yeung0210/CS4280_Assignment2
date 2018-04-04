@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="java.io.PrintWriter"%>
-<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" import= "java.util.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,31 +31,71 @@
                     String strSQL = null;
                     String result = null;
 
+//                    try {
+//                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//                        con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+//                        stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//                        out.println("Connected");
+//                    } catch(ClassNotFoundException cnfe) {
+//                        cnfe.printStackTrace();
+//                    } catch(SQLException sqlex) { 
+//                        sqlex.printStackTrace();
+//                        throw sqlex;
+//                    } 
+//                    
+//                    try {
+//                        strSQL = "SELECT [Book_name] FROM [Book]";
+//                        rs = stmt.executeQuery(strSQL);
+//                        while (rs.next()) {
+//                           out.println("<td>");
+//                           result = rs.getString("Book_name");
+//                           out.println(result);
+//                           out.println("</td>");
+//                        }
+//                    } catch(SQLException sqlex) { 
+//                        sqlex.printStackTrace();
+//                        throw sqlex;
+//                    } catch (NullPointerException ne) {
+//                        out.println("Error!");
+//                    }
+                    
                     try {
                         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                         con = DriverManager.getConnection(url, dbLoginId, dbPwd);
                         stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                        if (con != null && !con.isClosed())
+                        {
+                            out.println("Connected");
+                            strSQL = "SELECT [Book_name] FROM [Book]";
+                            rs = stmt.executeQuery(strSQL);
+                            while (rs.next()) {
+                               out.println("<td>");
+                               result = rs.getString("Book_name");
+                               out.println(result);
+                               out.println("</td>");
+                            }
+                        } 
                     } catch(ClassNotFoundException cnfe) {
                         cnfe.printStackTrace();
-                    } catch(SQLException sqlex) {
-                        sqlex.printStackTrace();
-                    }
-
-                    try {
-                        strSQL = "SELECT [Book_name] FROM [aiad044_db].[dbo].[Book]";
-                        rs = stmt.executeQuery(strSQL);
-                        while (rs.next()) {
-                           out.println("<td>");
-                           out.println(rs.getString("Book_name"));
-                           out.println("</td>");
-                        }
-                    } catch (SQLException sqlex) {
+                    } catch(SQLException sqlex) { 
                         sqlex.printStackTrace();
                         throw sqlex;
                     } catch (NullPointerException ne) {
                         out.println("Error!");
-                    }
+                    } finally {
+                        try {
+                            if(rs!=null)
+                                rs.close();
+                            if(stmt!=null)
+                                stmt.close();
+                            if(con!=null)
+                                con.close();
+                        }
+                        catch(Exception ex) {
+                            System.out.println(ex.toString());
+                        }
 
+                    }
                 %>
             </tr>
         </table>
