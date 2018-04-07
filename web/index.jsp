@@ -85,47 +85,43 @@
                       margin: 50px;">
                 <h3>Book Categories</h3>
                 <ul>
-                    <li>ahiofwelk</li>
-                    <li>ahiofwelk</li>
-                    <li>ahiofwelk</li>
-                    <li>ahiofwelk</li>
-                    <li>ahiofwelk</li>
+                    <li>Category 1</li>
+                    <li>Category 2</li>
+                    <li>Category 3</li>
+                    <li>Category 4</li>
+                    <li>Category 5</li>
                 </ul>          
             </fieldset>
         </div>
         
-        <div style="float: left">
-            <table style="margin: 50px; 
-                   padding: 20px; 
+        <div style="float: left; margin: 50px; padding: 20px;">
+            <p>Search Book: <input type="text" size="100" name="search_name" /></p>
+            <table style="padding: 20px;
+                   margin-top: 50px;
                    border: 1px dotted #000000;
                    border-radius: 15px;">
                 <tr>
-                    <td style="padding: 30px;">
-                        <h3>Book name</h3>
-                        <p>Book author</p>
-                        <p>Book price</p>
-                    </td>
-                    <td style="padding: 30px;">
-                        <h3>Book name</h3>
-                        <p>Book author</p>
-                        <p>Book price</p>
-                    </td>
-                    <td style="padding: 30px;">
-                        <h3>Book name</h3>
-                        <p>Book author</p>
-                        <p>Book price</p>
-                    </td>
-                    <td style="padding: 30px;">
-                        <h3>Book name</h3>
-                        <p>Book author</p>
-                        <p>Book price</p>
-                    </td>
-                    <td style="padding: 30px;">
-                        <h3>Book name</h3>
-                        <p>Book author</p>
-                        <p>Book price</p>
-                    </td>
-                </tr>    
+                    <td style="padding: 20px;">
+                        <form action="shoppingCart">
+                            <h4>Russian Roulette: The Inside Story of Putin's War on America and the Election of Donald Trump</h4>
+                            <p>Michael Isikoff and David Corn</p>
+                            <p>$17</p>
+                            <a href="" style="font-size: 10px"><p>View Detail</p></a>
+                            <input type="submit" value="Add to Shopping Cart" />
+                        </form>
+                    </td>  
+                </tr>  
+                <tr>
+                    <td style="padding: 20px;">
+                        <form action="shoppingCart">
+                            <h4>A Higher Loyalty: Truth, Lies, and Leadership</h4>
+                            <p>James Comey</p>
+                            <p>$15.99</p>
+                            <a href="" style="font-size: 10px"><p>View Detail</p></a>
+                            <input type="submit" value="Add to Shopping Cart" />
+                        </form>
+                    </td>  
+                </tr>   
                     <% 
                           // connect to database and get the book information
 //                        String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad044_db";
