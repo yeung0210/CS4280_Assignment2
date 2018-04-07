@@ -17,27 +17,72 @@
              <h1>CS4280 Internet Bookstore</h1>
         </center>
         <br><br>
-        <p style="float: right; padding-right: 50px;">Hello! You haven't login yet</p>
+        <%
+            String session_username = (String)session.getAttribute("username");
+            if(session_username == null) {
+                out.println("<a href=\"\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
+                out.println("<p style=\"float: right; padding-right: 50px;\">Hello! You haven't login yet</p>");
+            }
+            else 
+            {
+                out.println("<a href=\"handleLogoutServlet\"><p style=\"float: right; padding-right: 50px;\">Logout</p></a>");
+                out.println("<a href=\"\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
+                out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + " !</p>");
+            }
+        %>
         <br><br><br><br>
         <div style="float: left;">
             <fieldset style="width: 150px; line-height: 2em;
                       border: 1px dotted #000000;
                       border-radius: 15px;
                       padding: 20px;
-                      margin: 15px;">
-                <form action="" method="POST">
-                    Username:
-                    <input type="text" name="username" />
-                    Password:
-                    <input type="password" name="password" />
-                    <input type="submit" value="Login"/>
-                </form>
+                      margin: 50px;">
+                <%
+                    if(session_username == null) {
+                        out.println("<form action=\"handleLoginServlet\" onsubmit=\"return checkField()\" name=\"loginForm\" method=\"POST\">");
+                        out.println("Username:");
+                        out.println("<input type=\"text\" name=\"username\" />");
+                        out.println("Password:");
+                        out.println("<input type=\"password\" name=\"password\" />");
+                        out.println("<a href=\"javascript:checkField()\"><input type=\"submit\" value=\"Login\" /></a>");
+                        out.println("</form>");
+                    }
+                    else 
+                    {
+                        out.println("<h3>Test</h3>");
+                        out.println("<a href=\"\"><p>Profile</p></a>");
+                        out.println("<a href=\"\"><p>Setting</p></a>");
+                        out.println("<a href=\"\"><p>Refund Request</p></a>");
+                    }
+                %>
+                
+                <script>
+                    function checkField() {
+                        if(loginForm.username.value == "" && loginForm.password.value == "")
+                        {
+                                window.alert("Please input the username and password"); 
+                                document.loginForm.username.focus();
+                                return false;
+                        } else if(loginForm.username.value == "")
+                                {
+                                        window.alert("Please input the username");
+                                        document.loginForm.username.focus();
+                                        return false;
+                                }
+                          else if(loginForm.password.value == "") 
+                                {
+                                        window.alert("Please input the password");
+                                        document.loginForm.password.focus();
+                                        return false;
+                                }
+                    }
+                </script>
             </fieldset>
             <fieldset style="width: 150px; line-height: 2em;
                       border: 1px dotted #000000;
                       border-radius: 15px;
                       padding: 20px;
-                      margin: 15px;">
+                      margin: 50px;">
                 <h3>Book Categories</h3>
                 <ul>
                     <li>ahiofwelk</li>
@@ -50,11 +95,21 @@
         </div>
         
         <div style="float: left">
-            <table style="margin: 15px; 
+            <table style="margin: 50px; 
                    padding: 20px; 
                    border: 1px dotted #000000;
                    border-radius: 15px;">
                 <tr>
+                    <td style="padding: 30px;">
+                        <h3>Book name</h3>
+                        <p>Book author</p>
+                        <p>Book price</p>
+                    </td>
+                    <td style="padding: 30px;">
+                        <h3>Book name</h3>
+                        <p>Book author</p>
+                        <p>Book price</p>
+                    </td>
                     <td style="padding: 30px;">
                         <h3>Book name</h3>
                         <p>Book author</p>
