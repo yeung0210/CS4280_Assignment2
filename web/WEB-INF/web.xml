@@ -12,6 +12,10 @@
         <servlet-name>shoppingCart</servlet-name>
         <servlet-class>cs4280.shoppingCart</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>shoppingCartServlet</servlet-name>
+        <servlet-class>cs4280.shoppingCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -21,8 +25,8 @@
         <url-pattern>/handleLogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>shoppingCart</servlet-name>
-        <url-pattern>/shoppingCart</url-pattern>
+        <servlet-name>shoppingCartServlet</servlet-name>
+        <url-pattern>/shoppingCartServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

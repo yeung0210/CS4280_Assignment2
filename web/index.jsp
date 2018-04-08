@@ -20,13 +20,13 @@
         <%
             String session_username = (String)session.getAttribute("username");
             if(session_username == null) {
-                out.println("<a href=\"\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
+                out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
                 out.println("<p style=\"float: right; padding-right: 50px;\">Hello! You haven't login yet</p>");
             }
             else 
             {
                 out.println("<a href=\"handleLogoutServlet\"><p style=\"float: right; padding-right: 50px;\">Logout</p></a>");
-                out.println("<a href=\"\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
+                out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
                 out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + " !</p>");
             }
         %>
@@ -102,23 +102,31 @@
                    border-radius: 15px;">
                 <tr>
                     <td style="padding: 20px;">
-                        <form action="shoppingCart">
+                        <form action="shoppingCartServlet">
+                            <input type="hidden" name="bookName" 
+                                   value="Russian Roulette: The Inside Story of Putin's War on America and the Election of Donald Trump" />
+                            <input type="hidden" name="bookAuthor" value="Michael Isikoff and David Corn" />
+                            <input type="hidden" name="bookPrice" value="17" />
                             <h4>Russian Roulette: The Inside Story of Putin's War on America and the Election of Donald Trump</h4>
                             <p>Michael Isikoff and David Corn</p>
                             <p>$17</p>
                             <a href="" style="font-size: 10px"><p>View Detail</p></a>
-                            <input type="submit" value="Add to Shopping Cart" />
+                            <input style="float: right;" type="submit" value="Add to Shopping Cart" />
                         </form>
                     </td>  
                 </tr>  
                 <tr>
                     <td style="padding: 20px;">
-                        <form action="shoppingCart">
+                        <form action="shoppingCartServlet">
+                            <input type="hidden" name="bookName" 
+                                   value="A Higher Loyalty: Truth, Lies, and Leadership">
+                            <input type="hidden" name="bookAuthor" value="James Comey" />
+                            <input type="hidden" name="bookPrice" value="15.99" />
                             <h4>A Higher Loyalty: Truth, Lies, and Leadership</h4>
                             <p>James Comey</p>
                             <p>$15.99</p>
                             <a href="" style="font-size: 10px"><p>View Detail</p></a>
-                            <input type="submit" value="Add to Shopping Cart" />
+                            <input style="float: right;" type="submit" value="Add to Shopping Cart" />
                         </form>
                     </td>  
                 </tr>   
