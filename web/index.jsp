@@ -27,7 +27,7 @@
             {
                 out.println("<a href=\"handleLogoutServlet\"><p style=\"float: right; padding-right: 50px;\">Logout</p></a>");
                 out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
-                out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + " !</p>");
+                out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + "</p>");
             }
         %>
         <br><br><br><br>
@@ -103,6 +103,7 @@
                 <tr>
                     <td style="padding: 20px;">
                         <form action="shoppingCartServlet">
+                                <input type="hidden" name="bookID" value="B001">
                             <input type="hidden" name="bookName" 
                                    value="Russian Roulette: The Inside Story of Putin's War on America and the Election of Donald Trump" />
                             <input type="hidden" name="bookAuthor" value="Michael Isikoff and David Corn" />
@@ -118,6 +119,7 @@
                 <tr>
                     <td style="padding: 20px;">
                         <form action="shoppingCartServlet">
+                            <input type="hidden" name="bookID" value="B002">
                             <input type="hidden" name="bookName" 
                                    value="A Higher Loyalty: Truth, Lies, and Leadership">
                             <input type="hidden" name="bookAuthor" value="James Comey" />

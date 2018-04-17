@@ -33,6 +33,7 @@ public class shoppingCartServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         shoppingCart cart;
+        String input_ID = request.getParameter("bookID");
         String input_name = request.getParameter("bookName");
         String input_author = request.getParameter("bookAuthor");
         String input_price_string = request.getParameter("bookPrice");
@@ -48,8 +49,26 @@ public class shoppingCartServlet extends HttpServlet {
                   cart = new shoppingCart();
                   session.setAttribute("shoppingCart", cart);
                 }
-                Item orderedItem = new Item(input_name, input_author, input_price);
-                cart.addItem(orderedItem);
+                
+                boolean bookExist = false;
+                int index = -1;
+                 for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
+                    Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                    if (currentItem.getBookID().equals(input_ID)) {
+                        bookExist = true;
+                        index = i;
+                    }
+                }
+                
+                if (bookExist) {
+                    Item foundItem = (Item)cart.getItemsOrdered().get(index);
+                    foundItem.increaseQuantity();
+                }
+                else {
+                   Item orderedItem = new Item(input_ID, input_name, input_author, input_price);
+                   cart.addItem(orderedItem);
+                }
+                
             }
         }
         
@@ -70,25 +89,35 @@ public class shoppingCartServlet extends HttpServlet {
         out.println("<body>");
         out.println("<center>");  
         out.println("<h1>CS4280 Internet Bookstore</h1>");
-
-        synchronized(session) {
-            
-            out.println("<table style=\"border: 1px solid black; border-collapse: collapse; padding: 10px\">");
-            out.println("<tr>");
-            out.println("<th>Book Name</th>"
-                    + "<th>Book author</th>"
-                    + "<th>Book price</th>");
-            for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
-                Item currentItem = (Item)cart.getItemsOrdered().get(i);
-                out.println("<tr><td>" + currentItem.getBookName() + "</td>");
-                out.println("<td>" + currentItem.getBookAuthor() + "</td>");
-                out.println("<td>" + currentItem.getBookPrice() + "</td></tr>");
-            }
-            out.println("</table>");
-            out.println("<br><br>");
-            out.println("<input type=\"submit\" value=\"Checkout\">");
+        
+        if (cart == null) {
+            out.println("<br><br><br>");
+            out.println("<h3>No Itme is selected!</h3>");
             out.println("<br><br>");
             out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
+        } 
+        else {
+            synchronized(session) {
+
+                out.println("<table style=\"border: 1px solid black; border-collapse: collapse; padding: 10px\">");
+                out.println("<tr>");
+                out.println("<th>Book Name</th>"
+                        + "<th>Book author</th>"
+                        + "<th>Quantity</th>"
+                        + "<th>Book price</th>");
+                for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
+                    Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                    out.println("<tr><td>" + currentItem.getBookName() + "</td>");
+                    out.println("<td>" + currentItem.getBookAuthor() + "</td>");
+                    out.println("<td>" + currentItem.getBookQuantity() + "</td>");
+                    out.println("<td>" + currentItem.getBookPrice() + "</td></tr>");
+                }
+                out.println("</table>");
+                out.println("<br><br>");
+                out.println("<input type=\"submit\" value=\"Checkout\">");
+                out.println("<br><br>");
+                out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
+            }
         }
     }
         

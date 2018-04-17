@@ -11,14 +11,22 @@ package cs4280;
  */
 public class Item {
     
+    private String book_ID;
     private String book_name;
     private String book_author;
     private double book_price;
+    private int book_quantity;
     
-    public Item(String name, String author, double price) {
+    public Item(String ID, String name, String author, double price) {
+        this.book_ID = ID;
         this.book_name = name;
         this.book_author = author;
         this.book_price = price;
+        this.book_quantity = 1;
+    }
+    
+    public String getBookID () {
+        return book_ID;
     }
     
     public String getBookName () {
@@ -31,6 +39,14 @@ public class Item {
     
     public Double getBookPrice() {
         return book_price;
+    }
+    
+    public int getBookQuantity() {
+        return book_quantity;
+    }
+    
+    public void increaseQuantity() {
+        book_quantity++;
     }
     
 }
