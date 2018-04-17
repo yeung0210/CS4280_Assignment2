@@ -37,12 +37,18 @@ public class shoppingCartServlet extends HttpServlet {
         String input_name = request.getParameter("bookName");
         String input_author = request.getParameter("bookAuthor");
         String input_price_string = request.getParameter("bookPrice");
+        String input_quantity_string = request.getParameter("bookQuantity");
         
         
         cart = (shoppingCart)session.getAttribute("shoppingCart");
         
-        if (input_name != null && input_author != null && input_price_string != null) {
+        if (input_quantity_string == null) {
+            int input_quantity = 0;
+        }
+       
+        if (input_name != null && input_author != null && input_price_string != null && input_quantity_string != null) {
             double input_price = Double.parseDouble(input_price_string);
+            int input_quantity = Integer.parseInt(input_quantity_string);
             synchronized(session) {
                 
                 if (cart == null) {
@@ -62,10 +68,10 @@ public class shoppingCartServlet extends HttpServlet {
                 
                 if (bookExist) {
                     Item foundItem = (Item)cart.getItemsOrdered().get(index);
-                    foundItem.increaseQuantity();
+                    foundItem.increaseQuantity(input_quantity);
                 }
                 else {
-                   Item orderedItem = new Item(input_ID, input_name, input_author, input_price);
+                   Item orderedItem = new Item(input_ID, input_name, input_author, input_price, input_quantity);
                    cart.addItem(orderedItem);
                 }
                 
@@ -92,7 +98,7 @@ public class shoppingCartServlet extends HttpServlet {
         
         if (cart == null) {
             out.println("<br><br><br>");
-            out.println("<h3>No Itme is selected!</h3>");
+            out.println("<h3>No Item is selected!</h3>");
             out.println("<br><br>");
             out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
         } 
@@ -104,17 +110,27 @@ public class shoppingCartServlet extends HttpServlet {
                 out.println("<th>Book Name</th>"
                         + "<th>Book author</th>"
                         + "<th>Quantity</th>"
-                        + "<th>Book price</th>");
+                        + "<th>Price</th>");
                 for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
                     Item currentItem = (Item)cart.getItemsOrdered().get(i);
                     out.println("<tr><td>" + currentItem.getBookName() + "</td>");
                     out.println("<td>" + currentItem.getBookAuthor() + "</td>");
                     out.println("<td>" + currentItem.getBookQuantity() + "</td>");
-                    out.println("<td>" + currentItem.getBookPrice() + "</td></tr>");
+                    out.println("<td>" + currentItem.getBookPrice() * currentItem.getBookQuantity() + "</td></tr>");
                 }
                 out.println("</table>");
+                out.println("<h4>Total Price: $");
+                double totalPrice = 0;
+                for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
+                    Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                    totalPrice += currentItem.getBookPrice() * currentItem.getBookQuantity();
+                }
+                out.println(totalPrice);
+                out.println("</h4>");
                 out.println("<br><br>");
+                out.println("<form action=\"checkout.jsp\" method=\"post\"><br>");
                 out.println("<input type=\"submit\" value=\"Checkout\">");
+                out.println("</form>");
                 out.println("<br><br>");
                 out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
             }

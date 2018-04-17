@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CS4280 Internet Bookstore</title>
+        
     </head>
     <body>
         <center>   
@@ -52,12 +53,12 @@
                         out.println("<h3>Test</h3>");
                         out.println("<a href=\"\"><p>Profile</p></a>");
                         out.println("<a href=\"\"><p>Setting</p></a>");
-                        out.println("<a href=\"\"><p>Refund Request</p></a>");
+                        out.println("<a href=\"reqestRefund.jsp\"><p>Request for Refund</p></a>");
                     }
                 %>
                 
                 <script>
-                    function checkField() {
+                    function checkField() { 
                         if(loginForm.username.value == "" && loginForm.password.value == "")
                         {
                                 window.alert("Please input the username and password"); 
@@ -112,7 +113,9 @@
                             <p>Michael Isikoff and David Corn</p>
                             <p>$17</p>
                             <a href="" style="font-size: 10px"><p>View Detail</p></a>
-                            <input style="float: right;" type="submit" value="Add to Shopping Cart" />
+                            <span style="float: right;"><h5>Number of Items: <input type="text" size="4" name="bookQuantity" value="1" /></h5>
+                            <input type="submit" value="Add to Shopping Cart" />
+                            </span>
                         </form>
                     </td>  
                 </tr>  
@@ -128,7 +131,9 @@
                             <p>James Comey</p>
                             <p>$15.99</p>
                             <a href="" style="font-size: 10px"><p>View Detail</p></a>
-                            <input style="float: right;" type="submit" value="Add to Shopping Cart" />
+                            <span style="float: right;"><h5>Number of Items: <input type="text" size="4" name="bookQuantity" value="1" /></h5>
+                            <input type="submit" value="Add to Shopping Cart" />
+                            </span>
                         </form>
                     </td>  
                 </tr>   

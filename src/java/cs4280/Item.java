@@ -17,12 +17,12 @@ public class Item {
     private double book_price;
     private int book_quantity;
     
-    public Item(String ID, String name, String author, double price) {
+    public Item(String ID, String name, String author, double price, int quantity) {
         this.book_ID = ID;
         this.book_name = name;
         this.book_author = author;
         this.book_price = price;
-        this.book_quantity = 1;
+        this.book_quantity = quantity;
     }
     
     public String getBookID () {
@@ -45,8 +45,8 @@ public class Item {
         return book_quantity;
     }
     
-    public void increaseQuantity() {
-        book_quantity++;
+    public void increaseQuantity(int value) {
+        book_quantity += value;
     }
     
 }

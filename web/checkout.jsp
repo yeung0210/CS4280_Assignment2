@@ -1,0 +1,125 @@
+<%-- 
+    Document   : checkout
+    Created on : 2018年4月17日, 下午12:12:14
+    Author     : yu
+--%>
+<%@page import="java.io.PrintWriter"%>
+<%@ page import="cs4280.*" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" import= "java.util.*"%>
+<!DOCTYPE html>
+<html>
+   <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>CS4280 Internet Bookstore - Checkout</title>
+        <style>
+            table, th, td {
+            border: 1px solid black;
+            text-align: left;
+            padding: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <center>   
+             <h1>CS4280 Internet Bookstore</h1>
+        </center>
+        <br><br>
+        <%
+            shoppingCart cart;
+            cart = (shoppingCart)session.getAttribute("shoppingCart");
+            String session_username = (String)session.getAttribute("username");
+            if(session_username == null) {
+                out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
+                out.println("<a href=\"index.jsp\"><p style=\"float: right; padding-right: 50px;\">Home</p></a>");
+                out.println("<p style=\"float: right; padding-right: 50px;\">Hello! You haven't login yet</p>");
+            }
+            else 
+            {
+                out.println("<a href=\"handleLogoutServlet\"><p style=\"float: right; padding-right: 50px;\">Logout</p></a>");
+                out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
+                out.println("<a href=\"index.jsp\"><p style=\"float: right; padding-right: 50px;\">Home</p></a>");
+                out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + "</p>");
+            }
+        %>
+        <center>
+        <br>
+        <br>
+        <br>
+        <br>
+            <%
+                if (cart == null) {
+                out.println("<br><br><br>");
+                out.println("<h3>No Itme is selected!</h3>");
+                out.println("<br><br>");
+                out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
+                } 
+                else {
+                    synchronized(session) {
+
+                        out.println("<table style=\"border: 1px solid black; border-collapse: collapse; padding: 10px\">");
+                        out.println("<tr>");
+                        out.println("<th>Book Name</th>"
+                                + "<th>Book author</th>"
+                                + "<th>Quantity</th>"
+                                + "<th>Price</th>");
+                        for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
+                            Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                            out.println("<tr><td>" + currentItem.getBookName() + "</td>");
+                            out.println("<td>" + currentItem.getBookAuthor() + "</td>");
+                            out.println("<td>" + currentItem.getBookQuantity() + "</td>");
+                            out.println("<td>" + currentItem.getBookPrice() * currentItem.getBookQuantity() + "</td></tr>");
+                        }
+                        out.println("</table>");
+                        out.println("<h4>Total Price: $");
+                        double totalPrice = 0;
+                        for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
+                            Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                            totalPrice += currentItem.getBookPrice() * currentItem.getBookQuantity();
+                        }
+                        out.println(totalPrice);
+                        out.println("</h4>");
+                    }
+                }
+            %>
+        
+            <fieldset style="line-height: 2em;
+                      width: 600px;
+                      text-align: left;
+                      padding: 20px;
+                      margin: 150px;">
+                <form action="confirmCheckoutServlet" method="post" name="paymentForm" onsunmit="return checkPaymentField()">
+                    <h3>Order Information</h3>
+                    <%
+                        if(session_username == null) {
+                            out.println("User: Guest");
+                            out.println("<br>");
+                        }
+                        else 
+                        {
+                            out.println("User: " + session_username);
+                            out.println("<br>");
+                        }
+                    %>
+                    Credit Card number: 
+                    <input type="text" name="creditCardNumber" size='16'/><br>
+                    Expire Date: 
+                    <input type="text" name="creditCardExpireMonth" size='2'/> / <input type="text" name="creditCardExpireYear" size='4'/><br>
+                    CVV:
+                     <input type="text" name="creditCardCVV" size='2'/><br>
+                     <a href="javascript:checkPaymentField()"><input type="submit" value="Confirm"></a>
+                </form>
+            </fieldset>
+            <script>
+           function checkPaymentField() {
+                if(paymentForm.creditCardNumber.value == "" || paymentForm.creditCardExpireMonth.value == "" || paymentForm.creditCardExpireYear.value == "" || paymentForm.creditCardCVV.value)
+                {
+                        window.alert("Please fill in all required infomation."); 
+                        return false;
+                } 
+            }
+        </script>
+        </center>
+
+        
+    </body>
+</html>
