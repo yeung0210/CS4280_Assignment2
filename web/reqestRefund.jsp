@@ -31,7 +31,8 @@
                       padding: 20px;
                       margin: 50px;">
                 <form action="" method="POST">
-                    <h4>Refund Form</h4>>
+                    <h4>Refund Form</h4>
+                    Order ID: <input type="text" name="orderID" />
                 </form>
             </fieldset>
         </center>

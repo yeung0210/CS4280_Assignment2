@@ -28,6 +28,10 @@
         <servlet-name>usePointsServlet</servlet-name>
         <servlet-class>cs4280.usePointsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>enquiryPointServlet</servlet-name>
+        <servlet-class>cs4280.enquiryPointServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>usePointsServlet</servlet-name>
         <url-pattern>/usePointsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>enquiryPointServlet</servlet-name>
+        <url-pattern>/enquiryPointServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
