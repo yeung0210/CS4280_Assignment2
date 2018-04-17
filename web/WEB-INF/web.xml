@@ -20,6 +20,14 @@
         <servlet-name>confirmCheckoutServlet</servlet-name>
         <servlet-class>cs4280.confirmCheckoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>useLoyaltyPointServlet</servlet-name>
+        <servlet-class>cs4280.useLoyaltyPointServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>usePointsServlet</servlet-name>
+        <servlet-class>cs4280.usePointsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -35,6 +43,14 @@
     <servlet-mapping>
         <servlet-name>confirmCheckoutServlet</servlet-name>
         <url-pattern>/confirmCheckoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>useLoyaltyPointServlet</servlet-name>
+        <url-pattern>/useLoyaltyPointServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>usePointsServlet</servlet-name>
+        <url-pattern>/usePointsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

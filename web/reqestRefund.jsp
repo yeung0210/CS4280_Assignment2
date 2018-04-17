@@ -22,9 +22,11 @@
             out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
             out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + "</p>");
         %>
-        <div style="float: left;">
+        
+        <center>
             <fieldset style="width: 500px; line-height: 2em;
                       border: 1px dotted #000000;
+                      text-align: left;
                       border-radius: 15px;
                       padding: 20px;
                       margin: 50px;">
@@ -32,5 +34,6 @@
                     <h4>Refund Form</h4>>
                 </form>
             </fieldset>
+        </center>
     </body>
 </html>

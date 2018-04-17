@@ -119,7 +119,7 @@ public class shoppingCartServlet extends HttpServlet {
                     out.println("<td>" + currentItem.getBookPrice() * currentItem.getBookQuantity() + "</td></tr>");
                 }
                 out.println("</table>");
-                out.println("<h4>Total Price: $");
+                out.println("<h4>Total: $");
                 double totalPrice = 0;
                 for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
                     Item currentItem = (Item)cart.getItemsOrdered().get(i);
