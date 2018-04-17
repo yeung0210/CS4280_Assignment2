@@ -43,7 +43,14 @@ public class usePointsServlet extends HttpServlet {
             out.println("<body><br><br><br>");
             
             HttpSession session = request.getSession();
+            if (session.getAttribute("loyalttPoint") == null) {
+                session.setAttribute("loyalttPoint", 0);
+            }
             int currentPoints = (Integer)session.getAttribute("loyalttPoint");
+            if (session.getAttribute("usedPoints") == null) {
+                session.setAttribute("usedPoints", 0);
+            }
+            int usedPoints = (Integer)session.getAttribute("usedPoints");
             String total_price_string = request.getParameter("totalPrice");
             Double total_price = Double.parseDouble(total_price_string);
 
@@ -67,9 +74,8 @@ public class usePointsServlet extends HttpServlet {
                     }
                     else
                     {
-                        currentPoints -= points_double;
-                        session.setAttribute("loyalttPoint", currentPoints);
-                        session.setAttribute("usedPoints", points_double);
+                        usedPoints += points_double;
+                        session.setAttribute("usedPoints", usedPoints);
                         response.sendRedirect("checkout.jsp");
                     }
                 }

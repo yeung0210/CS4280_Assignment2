@@ -46,7 +46,12 @@ public class confirmCheckoutServlet extends HttpServlet {
             out.println("<h3>Order ID: xxxxx</h3>");
             HttpSession session = request.getSession();
             shoppingCart cart;
+            int loyalttPoint = (Integer)session.getAttribute("loyalttPoint");
+            int usedPoint = (Integer)session.getAttribute("usedPoints");
+            int currentPoints = loyalttPoint - usedPoint;
+            session.setAttribute("loyalttPoint", currentPoints);
             session.setAttribute("shoppingCart", null);
+            session.setAttribute("usedPoints", null);
             out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
             out.println("</body>");
             out.println("</html>");

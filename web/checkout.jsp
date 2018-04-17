@@ -64,12 +64,15 @@
                         out.println("<td>" + currentItem.getBookQuantity() + "</td>");
                         out.println("<td>" + currentItem.getBookPrice() * currentItem.getBookQuantity() + "</td></tr>");
                     }
-                    Double usedPoints = (Double)session.getAttribute("usedPoints");
-                    if (usedPoints != null) {
+                    int usedPoints = 0;
+                    if (session.getAttribute("usedPoints") != null) {
+                        usedPoints = (Integer)session.getAttribute("usedPoints");
                         out.println("<tr><td colspan=2>Loyalty point</td>");
-                        out.println("<td>" + usedPoints.intValue() +"</td>");
+                        out.println("<td>" + usedPoints +"</td>");
                         out.println("<td> -" + usedPoints +"</td></tr>");
                     }
+                    
+                    
                     out.println("</table>");
                     out.println("<h4>Total: $");
                     for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
@@ -84,7 +87,7 @@
                     
                 }
                 
-                if(session_username != null) {
+                if(session_username != null && session.getAttribute("usedPoints") == null) {
                      out.println("<h3>Special reward for members: Every $50 purchase can earn 1 loyalty point!!!!!</h3>");
                      out.println("<form action=\"usePointsServlet\" method=\"post\">");
                      out.println("<input type=\"hidden\" name=\"totalPrice\" "
@@ -92,9 +95,6 @@
                      out.println("<input type=\"submit\" value=\"Use Loyalty Points to pay\" />");
                      out.println("</form>");
                      out.println("<br>");
-                     out.println("<form action=\"\">");
-                     out.println("<input type=\"submit\" value=\"Enquiry Loyalty Points in this purchase\" />");
-                     out.println("</form>");
                 }
             %>
         
@@ -103,7 +103,7 @@
                       text-align: left;
                       padding: 20px;
                       margin: 50px;">
-                <form onsunmit="return checkPaymentField()" action="confirmCheckoutServlet" method="post" name="paymentForm">
+                <form action="confirmCheckoutServlet" onsubmit="return checkPaymentField()" method="POST" name="paymentForm">
                     <h3>Order Information</h3>
                     <%
                         if(session_username == null) {
@@ -126,14 +126,14 @@
                 </form>
             </fieldset>
             <script>
-           function checkPaymentField() {
-                if(paymentForm.creditCardNumber.value === "" && paymentForm.creditCardExpireMonth.value == "" && paymentForm.creditCardExpireYear.value == "" && paymentForm.creditCardCVV.value == "")
-                {
-                        window.alert("Please fill in all required infomation."); 
-                        return false;
-                } 
-            }
-        </script>
+                function checkPaymentField() {
+                     if((paymentForm.creditCardNumber.value == "") || (paymentForm.creditCardExpireMonth.value == "") || (paymentForm.creditCardExpireYear.value == "") || (paymentForm.creditCardCVV.value == ""))
+                     {
+                             window.alert("Please fill in all required infomation."); 
+                             return false;
+                     } 
+                 }
+            </script>
         </center>
 
         
