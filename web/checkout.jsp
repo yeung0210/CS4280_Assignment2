@@ -88,7 +88,7 @@
                 }
                 
                 if(session_username != null && session.getAttribute("usedPoints") == null) {
-                     out.println("<h3>Special reward for members: Every $50 purchase can earn 1 loyalty point!!!!!</h3>");
+                     out.println("<h3>Special reward for members: 1 loyalty point = $1</h3>");
                      out.println("<form action=\"usePointsServlet\" method=\"post\">");
                      out.println("<input type=\"hidden\" name=\"totalPrice\" "
                             + "value=\"" + totalPrice + "\">");
@@ -115,7 +115,10 @@
                             out.println("User: " + session_username);
                             out.println("<br>");
                         }
+                        out.println("<input type=\"hidden\" name=\"totalPrice\" "
+                            + "value=\"" + totalPrice + "\">");
                     %>
+                    
                     Credit Card number: 
                     <input type="text" name="creditCardNumber" size='16'/><br>
                     Expire Date: 

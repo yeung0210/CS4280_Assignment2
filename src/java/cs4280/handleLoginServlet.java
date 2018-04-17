@@ -43,6 +43,7 @@ public class handleLoginServlet extends HttpServlet {
         if (input_username.equals(username_test) && input_password.equals(password_test)) {
             HttpSession session = request.getSession();
             session.setAttribute("username", input_username);
+            session.setAttribute("shoppingCart", null);
             int points = 30;
             session.setAttribute("loyalttPoint", points);
             

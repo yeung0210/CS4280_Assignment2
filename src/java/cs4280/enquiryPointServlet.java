@@ -15,9 +15,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author yu
+ * @author cyeung234
  */
-public class usePointsServlet extends HttpServlet {
+public class enquiryPointServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,56 +33,25 @@ public class usePointsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           out.println("<!DOCTYPE html>");
+            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>CS4280 Internet Bookstore - Use Loyalty Point</title>");            
+            out.println("<title>CS4280 Internet Bookstore - Enquiry Points</title>");            
             out.println("</head>");
-            out.println("<body>");
-            out.println("<center><h1>CS4280 Internet Bookstore</h1>");
-            out.println("<body><br><br><br>");
+            out.println("<body><br><br><br><center>");
             
+            int pointsGained = 0;
+            Double totalPriceConfirmed; 
+            totalPriceConfirmed = Double.parseDouble(request.getParameter("totalPrice"));
+            pointsGained = totalPriceConfirmed.intValue() / 50;
+            out.println("<h1>Congratulations! You earned " + pointsGained +" loyalty points.</h1>");
             HttpSession session = request.getSession();
-            int currentPoints = (Integer)session.getAttribute("loyalttPoint");
-            if (session.getAttribute("usedPoints") == null) {
-                session.setAttribute("usedPoints", 0);
-            }
-            int usedPoints = (Integer)session.getAttribute("usedPoints");
-            String total_price_string = request.getParameter("totalPrice");
-            Double total_price = Double.parseDouble(total_price_string);
-
-            
-            if (currentPoints > 0) {
-                out.println("<h3>Points you have: " + currentPoints + "</h3>");
-                out.println("<h3>Total in the order: $" + total_price + " </h3>");
-                out.println("<form action=\"usePointsServlet\" action=\"POST\">");
-                out.println("<input type=\"hidden\" name=\"totalPrice\" "
-                            + "value=\"" + total_price + "\">");
-                out.println("<h4>How many points do you want to use this time? (Loyalty points are not refundable)");
-                out.println("<input type=\"text\" name=\"pointsToUse\" size=\"4\" />");
-                out.println("<input type=\"submit\" value=\"Use\" /></h4>");
-                out.println("</form>");
-                
-                String points_string = request.getParameter("pointsToUse");
-                if (points_string != null) {
-                    Double points_double = Double.parseDouble(points_string);
-                    if (points_double > currentPoints) {
-                        out.println("<p style=\"color:red;\">Please enter a number no larger than the points you have");
-                    }
-                    else
-                    {
-                        usedPoints += points_double;
-                        session.setAttribute("usedPoints", usedPoints);
-                        response.sendRedirect("checkout.jsp");
-                    }
-                }
-            }
-            else {
-                out.println("<h3>Sorry you have no points now</h3><br><br>");
-                out.println("<a href=\"checkout.jsp\"><p>Go Back to checkout page</p></a>");
-                out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
-            }
-            
+            int loyalttPoint = (Integer)session.getAttribute("loyalttPoint");
+            loyalttPoint += pointsGained;
+            session.setAttribute("loyalttPoint", loyalttPoint);
+            out.println("<h3>Current Loyalty points: " + loyalttPoint +" points.</h3>");
+            out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
+            out.println("</center>");
             out.println("</body>");
             out.println("</html>");
         }
