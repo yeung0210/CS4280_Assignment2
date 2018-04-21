@@ -29,16 +29,20 @@
             cart = (shoppingCart)session.getAttribute("shoppingCart");
             String session_username = (String)session.getAttribute("username");
             if(session_username == null) {
-                out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
-                out.println("<a href=\"index.jsp\"><p style=\"float: right; padding-right: 50px;\">Home</p></a>");
-                out.println("<p style=\"float: right; padding-right: 50px;\">Hello! You haven't login yet</p>");
+        %>
+                <a href="shoppingCartServlet"><p style="float: right; padding-right: 50px;">Shopping Cart</p></a>
+                <a href="index.jsp"><p style="float: right; padding-right: 50px;">Home</p></a>
+                <p style="float: right; padding-right: 50px;">Hello! You haven't login yet</p>
+        <%
             }
             else 
             {
-                out.println("<a href=\"handleLogoutServlet\"><p style=\"float: right; padding-right: 50px;\">Logout</p></a>");
-                out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
-                out.println("<a href=\"index.jsp\"><p style=\"float: right; padding-right: 50px;\">Home</p></a>");
-                out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + "</p>");
+        %>
+                <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
+                <a href="shoppingCartServlet"><p style="float: right; padding-right: 50px;">Shopping Cart</p></a>
+                <a href="index.jsp"><p style="float: right; padding-right: 50px;">Home</p></a>
+                <p style="float: right; padding-right: 50px;">Welcome <%=session_username%></p>
+        <%
             }
         %>
         <center>
@@ -46,56 +50,65 @@
         <br>
         <br>
         <br>
-            <%
-                
-                double totalPrice = 0;
-                synchronized(session) {
+        <%
 
-                    out.println("<table style=\"border: 1px solid black; border-collapse: collapse; padding: 10px\">");
-                    out.println("<tr>");
-                    out.println("<th>Book Name</th>"
-                            + "<th>Book author</th>"
-                            + "<th>Quantity</th>"
-                            + "<th>Price</th>");
+            double totalPrice = 0;
+            synchronized(session) {
+                
+        %>
+
+            <table style="border: 1px solid black; border-collapse: collapse; padding: 10px">
+                <tr>
+                <th>Book Name</th>
+                <th>Book author</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <%
                     for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
                         Item currentItem = (Item)cart.getItemsOrdered().get(i);
-                        out.println("<tr><td>" + currentItem.getBookName() + "</td>");
-                        out.println("<td>" + currentItem.getBookAuthor() + "</td>");
-                        out.println("<td>" + currentItem.getBookQuantity() + "</td>");
-                        out.println("<td>" + currentItem.getBookPrice() * currentItem.getBookQuantity() + "</td></tr>");
+                %>
+                        <tr><td><%=currentItem.getBookName()%></td>
+                        <td><%=currentItem.getBookAuthor()%></td>
+                        <td><%=currentItem.getBookQuantity()%></td>
+                        <td><%=currentItem.getBookPrice() * currentItem.getBookQuantity() %></td></tr>
+                <%
                     }
                     int usedPoints = 0;
                     if (session.getAttribute("usedPoints") != null) {
                         usedPoints = (Integer)session.getAttribute("usedPoints");
-                        out.println("<tr><td colspan=2>Loyalty point</td>");
-                        out.println("<td>" + usedPoints +"</td>");
-                        out.println("<td> -" + usedPoints +"</td></tr>");
+                %>
+                        <tr><td colspan=2>Loyalty point</td>
+                        <td><%=usedPoints %></td>
+                        <td>-<%=usedPoints %></td></tr>
+                <%
                     }
-                    
-                    
-                    out.println("</table>");
-                    out.println("<h4>Total: $");
-                    for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
-                        Item currentItem = (Item)cart.getItemsOrdered().get(i);
-                        totalPrice += currentItem.getBookPrice() * currentItem.getBookQuantity();
-                    }
-                    if (session.getAttribute("usedPoints") != null) {
-                        totalPrice -= usedPoints;
-                    }
-                    out.println(totalPrice);
-                    out.println("</h4>");
-                    
+                %>
+            </table>
+            <h4>Total: $
+            <%
+                for (int i = 0; i < cart.getItemsOrdered().size(); i++) {
+                    Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                    totalPrice += currentItem.getBookPrice() * currentItem.getBookQuantity();
                 }
+                if (session.getAttribute("usedPoints") != null) {
+                    totalPrice -= usedPoints;
+                }
+                out.println(totalPrice);
+            %>
                 
-                if(session_username != null && session.getAttribute("usedPoints") == null) {
-                     out.println("<h3>Special reward for members: 1 loyalty point = $1</h3>");
-                     out.println("<form action=\"usePointsServlet\" method=\"post\">");
-                     out.println("<input type=\"hidden\" name=\"totalPrice\" "
-                            + "value=\"" + totalPrice + "\">");
-                     out.println("<input type=\"submit\" value=\"Use Loyalty Points to pay\" />");
-                     out.println("</form>");
-                     out.println("<br>");
+             </h4>
+            <%
                 }
+            if(session_username != null && session.getAttribute("usedPoints") == null) {
+            %>
+                <h3>Special reward for members: 1 loyalty point = $1</h3>
+                <form action="usePointsServlet" method="post">
+                <input type="hidden" name="totalPrice" value="<%=totalPrice%>" />
+                <input type="submit" value="Use Loyalty Points to pay" />
+                </form>
+                <br>
+            <%
+            }
             %>
         
             <fieldset style="line-height: 2em;
@@ -107,18 +120,20 @@
                     <h3>Order Information</h3>
                     <%
                         if(session_username == null) {
-                            out.println("User: Guest");
-                            out.println("<br>");
+                    %>
+                            User: Guest
+                            <br>"
+                    <%
                         }
                         else 
                         {
-                            out.println("User: " + session_username);
-                            out.println("<br>");
-                        }
-                        out.println("<input type=\"hidden\" name=\"totalPrice\" "
-                            + "value=\"" + totalPrice + "\">");
                     %>
-                    
+                            User: <%=session_username%>
+                            <br>
+                    <%
+                        }
+                    %>
+                    <input type="hidden" name="totalPrice" value="<%=totalPrice%>" />
                     Credit Card number: 
                     <input type="text" name="creditCardNumber" size='16'/><br>
                     Expire Date: 

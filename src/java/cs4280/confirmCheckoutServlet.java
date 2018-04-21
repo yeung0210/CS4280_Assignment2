@@ -51,7 +51,10 @@ public class confirmCheckoutServlet extends HttpServlet {
             out.println("<h4>Total: " + totalPriceConfirmed + "</h4>");
             
             HttpSession session = request.getSession();
-            int loyalttPoint = (Integer)session.getAttribute("loyalttPoint");
+            int loyalttPoint = 0;
+            if (session.getAttribute("loyalttPoint") != null) {
+                loyalttPoint = (Integer)session.getAttribute("loyalttPoint");
+            }
             int usedPoint = 0;
             if (session.getAttribute("usedPoints") != null) {
                 usedPoint = (Integer)session.getAttribute("usedPoints");
@@ -62,7 +65,7 @@ public class confirmCheckoutServlet extends HttpServlet {
             session.setAttribute("shoppingCart", null);
             session.setAttribute("usedPoints", null);
             
-            if (totalPriceConfirmed >= 50) {
+            if (totalPriceConfirmed >= 50 && session.getAttribute("username") != null) {
                 out.println("<h3>Special reward for members: Every $50 in the purchase can earn 1 loyalty point</h3>");
                          out.println("<form action=\"enquiryPointServlet\" method=\"post\">");
                          out.println("<input type=\"hidden\" name=\"totalPrice\" "
@@ -70,9 +73,9 @@ public class confirmCheckoutServlet extends HttpServlet {
                          out.println("<input type=\"submit\" value=\"Enquiry Loyalty Points\" />");
                          out.println("</form>");
             }
-                out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
-                out.println("</body>");
-                out.println("</html>");
+            out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

@@ -57,7 +57,7 @@
                     else 
                     {
                 %>
-                        <h3>Test</h3>");
+                        <h3>Test</h3>
                         <a href=""><p>Profile</p></a>
                         <a href=""><p>Setting</p></a>
                         <a href="reqestRefund.jsp"><p>Request for Refund</p></a>
