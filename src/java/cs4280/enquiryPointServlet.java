@@ -46,10 +46,10 @@ public class enquiryPointServlet extends HttpServlet {
             pointsGained = totalPriceConfirmed.intValue() / 50;
             out.println("<h1>Congratulations! You earned " + pointsGained +" loyalty points.</h1>");
             HttpSession session = request.getSession();
-            int loyalttPoint = (Integer)session.getAttribute("loyalttPoint");
-            loyalttPoint += pointsGained;
-            session.setAttribute("loyalttPoint", loyalttPoint);
-            out.println("<h3>Current Loyalty points: " + loyalttPoint +" points.</h3>");
+            int loyaltyPoint = (Integer)session.getAttribute("loyaltyPoint");
+            loyaltyPoint += pointsGained;
+            session.setAttribute("loyaltyPoint", loyaltyPoint);
+            out.println("<h3>Current Loyalty points: " + loyaltyPoint +" points.</h3>");
             out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
             out.println("</center>");
             out.println("</body>");

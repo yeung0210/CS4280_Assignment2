@@ -7,6 +7,8 @@ package cs4280;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,7 @@ public class confirmCheckoutServlet extends HttpServlet {
             throws ServletException, IOException {
         
         
-        
+        NumberFormat formatter = new DecimalFormat("#0.00");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -48,20 +50,20 @@ public class confirmCheckoutServlet extends HttpServlet {
             out.println("<body><br><br><br>");
             out.println("<center><h1>Successful Payment!</h1>");
             out.println("<h4>Order ID: xxxxx</h4>");
-            out.println("<h4>Total: " + totalPriceConfirmed + "</h4>");
+            out.println("<h4>Total: " + formatter.format(totalPriceConfirmed) + "</h4>");
             
             HttpSession session = request.getSession();
-            int loyalttPoint = 0;
-            if (session.getAttribute("loyalttPoint") != null) {
-                loyalttPoint = (Integer)session.getAttribute("loyalttPoint");
+            int loyaltyPoint = 0;
+            if (session.getAttribute("loyaltyPoint") != null) {
+                loyaltyPoint = (Integer)session.getAttribute("loyaltyPoint");
             }
             int usedPoint = 0;
             if (session.getAttribute("usedPoints") != null) {
                 usedPoint = (Integer)session.getAttribute("usedPoints");
             }
                
-            int currentPoints = loyalttPoint - usedPoint;
-            session.setAttribute("loyalttPoint", currentPoints);
+            int currentPoints = loyaltyPoint - usedPoint;
+            session.setAttribute("loyaltyPoint", currentPoints);
             session.setAttribute("shoppingCart", null);
             session.setAttribute("usedPoints", null);
             
@@ -69,7 +71,7 @@ public class confirmCheckoutServlet extends HttpServlet {
                 out.println("<h3>Special reward for members: Every $50 in the purchase can earn 1 loyalty point</h3>");
                          out.println("<form action=\"enquiryPointServlet\" method=\"post\">");
                          out.println("<input type=\"hidden\" name=\"totalPrice\" "
-                                + "value=\"" + totalPriceConfirmed + "\">");
+                                + "value=\"" + formatter.format(totalPriceConfirmed) + "\">");
                          out.println("<input type=\"submit\" value=\"Enquiry Loyalty Points\" />");
                          out.println("</form>");
             }

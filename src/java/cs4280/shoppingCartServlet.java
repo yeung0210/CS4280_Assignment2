@@ -7,6 +7,8 @@ package cs4280;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,8 @@ public class shoppingCartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        NumberFormat formatter = new DecimalFormat("#0.00");
         
         HttpSession session = request.getSession();
         shoppingCart cart;
@@ -116,7 +120,7 @@ public class shoppingCartServlet extends HttpServlet {
                     out.println("<tr><td>" + currentItem.getBookName() + "</td>");
                     out.println("<td>" + currentItem.getBookAuthor() + "</td>");
                     out.println("<td>" + currentItem.getBookQuantity() + "</td>");
-                    out.println("<td>" + currentItem.getBookPrice() * currentItem.getBookQuantity() + "</td></tr>");
+                    out.println("<td>" + formatter.format(currentItem.getBookPrice() * currentItem.getBookQuantity()) + "</td></tr>");
                 }
                 out.println("</table>");
                 out.println("<h4>Total: $");
@@ -125,7 +129,8 @@ public class shoppingCartServlet extends HttpServlet {
                     Item currentItem = (Item)cart.getItemsOrdered().get(i);
                     totalPrice += currentItem.getBookPrice() * currentItem.getBookQuantity();
                 }
-                out.println(totalPrice);
+                     
+                out.println(formatter.format(totalPrice));
                 out.println("</h4>");
                 out.println("<br><br>");
                 out.println("<form action=\"checkout.jsp\" method=\"post\"><br>");

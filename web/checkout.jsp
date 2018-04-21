@@ -3,6 +3,9 @@
     Created on : 2018年4月17日, 下午12:12:14
     Author     : yu
 --%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page import="cs4280.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" import= "java.util.*"%>
@@ -25,6 +28,7 @@
         </center>
         <br><br>
         <%
+            NumberFormat formatter = new DecimalFormat("#0.00");
             shoppingCart cart;
             cart = (shoppingCart)session.getAttribute("shoppingCart");
             String session_username = (String)session.getAttribute("username");
@@ -70,7 +74,7 @@
                         <tr><td><%=currentItem.getBookName()%></td>
                         <td><%=currentItem.getBookAuthor()%></td>
                         <td><%=currentItem.getBookQuantity()%></td>
-                        <td><%=currentItem.getBookPrice() * currentItem.getBookQuantity() %></td></tr>
+                        <td><%=formatter.format(currentItem.getBookPrice() * currentItem.getBookQuantity()) %></td></tr>
                 <%
                     }
                     int usedPoints = 0;
@@ -93,7 +97,7 @@
                 if (session.getAttribute("usedPoints") != null) {
                     totalPrice -= usedPoints;
                 }
-                out.println(totalPrice);
+                out.println(formatter.format(totalPrice));
             %>
                 
              </h4>
