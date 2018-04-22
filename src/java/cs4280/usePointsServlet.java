@@ -7,6 +7,8 @@ package cs4280;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,8 @@ public class usePointsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        NumberFormat formatter = new DecimalFormat("#0.00");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -43,7 +47,7 @@ public class usePointsServlet extends HttpServlet {
             out.println("<body><br><br><br>");
             
             HttpSession session = request.getSession();
-            int currentPoints = (Integer)session.getAttribute("loyalttPoint");
+            int currentPoints = (Integer)session.getAttribute("loyaltyPoint");
             if (session.getAttribute("usedPoints") == null) {
                 session.setAttribute("usedPoints", 0);
             }
@@ -54,7 +58,7 @@ public class usePointsServlet extends HttpServlet {
             
             if (currentPoints > 0) {
                 out.println("<h3>Points you have: " + currentPoints + "</h3>");
-                out.println("<h3>Total in the order: $" + total_price + " </h3>");
+                out.println("<h3>Total in the order: $" + formatter.format(total_price) + " </h3>");
                 out.println("<form action=\"usePointsServlet\" action=\"POST\">");
                 out.println("<input type=\"hidden\" name=\"totalPrice\" "
                             + "value=\"" + total_price + "\">");
@@ -64,10 +68,14 @@ public class usePointsServlet extends HttpServlet {
                 out.println("</form>");
                 
                 String points_string = request.getParameter("pointsToUse");
+                String total_price_String = request.getParameter("totalPrice");
                 if (points_string != null) {
                     Double points_double = Double.parseDouble(points_string);
+                    Double total_price_double = Double.parseDouble(total_price_String);
                     if (points_double > currentPoints) {
                         out.println("<p style=\"color:red;\">Please enter a number no larger than the points you have");
+                    } else if (points_double > total_price_double) {
+                        out.println("<p style=\"color:red;\">Please enter a number no larger than total price");
                     }
                     else
                     {
