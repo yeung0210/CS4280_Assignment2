@@ -68,10 +68,14 @@ public class usePointsServlet extends HttpServlet {
                 out.println("</form>");
                 
                 String points_string = request.getParameter("pointsToUse");
+                String total_price_String = request.getParameter("totalPrice");
                 if (points_string != null) {
                     Double points_double = Double.parseDouble(points_string);
+                    Double total_price_double = Double.parseDouble(total_price_String);
                     if (points_double > currentPoints) {
                         out.println("<p style=\"color:red;\">Please enter a number no larger than the points you have");
+                    } else if (points_double > total_price_double) {
+                        out.println("<p style=\"color:red;\">Please enter a number no larger than total price");
                     }
                     else
                     {
