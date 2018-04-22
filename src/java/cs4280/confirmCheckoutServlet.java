@@ -5,11 +5,13 @@
  */
 package cs4280;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -39,6 +41,8 @@ public class confirmCheckoutServlet extends HttpServlet {
         
         NumberFormat formatter = new DecimalFormat("#0.00");
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        String currentMember = (String)session.getAttribute("username");
         
         String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad044_db";
         String dbLoginId = "aiad044";
@@ -47,13 +51,16 @@ public class confirmCheckoutServlet extends HttpServlet {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
-        String strSQL = null;
+        String strSQLUpdate = null;
+        String strSQLInsert = null;
         
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
             Double totalPriceConfirmed;
             totalPriceConfirmed = Double.parseDouble(request.getParameter("totalPrice"));
+            String orderID = "";
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -62,10 +69,18 @@ public class confirmCheckoutServlet extends HttpServlet {
             out.println("<body>");
             out.println("<body><br><br><br>");
             out.println("<center><h1>Successful Payment!</h1>");
-            out.println("<h4>Order ID: xxxxx</h4>");
+            if (currentMember != null) {
+                
+                for (int i = 0; i < 6; i++) {
+                    Random r = new Random();
+                    char c = (char)(r.nextInt(26) + 'a');  
+                    orderID += c;
+                }
+
+                out.println("<h4>Order ID: " + orderID +"</h4>");
+            }
             out.println("<h4>Total: " + formatter.format(totalPriceConfirmed) + "</h4>");
             
-            HttpSession session = request.getSession();
             int loyaltyPoint = 0;
             if (session.getAttribute("loyaltyPoint") != null) {
                 loyaltyPoint = (Integer)session.getAttribute("loyaltyPoint");
@@ -78,7 +93,7 @@ public class confirmCheckoutServlet extends HttpServlet {
             int currentPoints = loyaltyPoint - usedPoint;
             session.setAttribute("loyaltyPoint", currentPoints);
             
-            String currentMember = (String)session.getAttribute("username");
+            
             
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -86,8 +101,10 @@ public class confirmCheckoutServlet extends HttpServlet {
                 stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 if (con != null && !con.isClosed() && currentMember != null)
                 {
-                    strSQL = "UPDATE [Member] SET [Member_Points] = " + currentPoints + " WHERE [Member_Username] = '" + currentMember +"'";
-                    stmt.executeUpdate(strSQL);
+                    strSQLUpdate = "UPDATE [Member] SET [Member_Points] = " + currentPoints + " WHERE [Member_Username] = '" + currentMember +"'";
+                    stmt.executeUpdate(strSQLUpdate);
+                    strSQLInsert = "INSERT INTO [Order] VALUES('" + orderID + "', '" + currentMember + "', " + totalPriceConfirmed + ", " + currentPoints + ")";
+                    stmt.executeUpdate(strSQLInsert);
                 }
             } catch(ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();

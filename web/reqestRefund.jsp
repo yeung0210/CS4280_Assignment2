@@ -18,10 +18,11 @@
         <br><br>
         <%
             String session_username = (String)session.getAttribute("username");
-            out.println("<a href=\"handleLogoutServlet\"><p style=\"float: right; padding-right: 50px;\">Logout</p></a>");
-            out.println("<a href=\"shoppingCartServlet\"><p style=\"float: right; padding-right: 50px;\">Shopping Cart</p></a>");
-            out.println("<p style=\"float: right; padding-right: 50px;\">Welcome " + session_username + "</p>");
         %>
+            <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
+            <a href="shoppingCartServlet"><p style="float: right; padding-right: 50px;">Shopping Cart</p></a>
+            <p style="float: right; padding-right: 50px;">Welcome<%=session_username %></p>
+
         
         <center>
             <fieldset style="width: 500px; line-height: 2em;
@@ -30,9 +31,13 @@
                       border-radius: 15px;
                       padding: 20px;
                       margin: 50px;">
-                <form action="" method="POST">
+                <form action="requestRefundServlet" method="POST" id="refundForm">
                     <h4>Refund Form</h4>
-                    Order ID: <input type="text" name="orderID" />
+                    Order ID: <input type="text" name="orderID" /><br>
+                    How much do you want to refund: <input type="text" name="refundValue" /><br>
+                    Reason: <br>
+                    <textarea rows="4" cols="50" name="reason" form="refundForm"></textarea><br>
+                    <input type="submit" value="Submit" />
                 </form>
             </fieldset>
         </center>

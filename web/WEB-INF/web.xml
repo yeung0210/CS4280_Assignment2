@@ -32,6 +32,10 @@
         <servlet-name>enquiryPointServlet</servlet-name>
         <servlet-class>cs4280.enquiryPointServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>requestRefundServlet</servlet-name>
+        <servlet-class>cs4280.requestRefundServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -59,6 +63,10 @@
     <servlet-mapping>
         <servlet-name>enquiryPointServlet</servlet-name>
         <url-pattern>/enquiryPointServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>requestRefundServlet</servlet-name>
+        <url-pattern>/requestRefundServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
