@@ -7,6 +7,13 @@ package cs4280;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +36,17 @@ public class enquiryPointServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
+        
+        String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad044_db";
+        String dbLoginId = "aiad044";
+        String dbPwd = "aiad044";
+
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        String strSQL = null;
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -49,6 +66,36 @@ public class enquiryPointServlet extends HttpServlet {
             int loyaltyPoint = (Integer)session.getAttribute("loyaltyPoint");
             loyaltyPoint += pointsGained;
             session.setAttribute("loyaltyPoint", loyaltyPoint);
+            String currentMember = (String)session.getAttribute("username");
+            
+            try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+                stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                if (con != null && !con.isClosed())
+                {
+                    strSQL = "UPDATE [Member] SET [Member_Points] = " + loyaltyPoint + " WHERE [Member_Username] = '" + currentMember +"'";
+                    stmt.executeUpdate(strSQL);
+                }
+            } catch(ClassNotFoundException cnfe) {
+                cnfe.printStackTrace();
+            } catch(SQLException sqlex) { 
+                sqlex.printStackTrace();
+            } finally {
+                try {
+                    if(rs!=null)
+                        rs.close();
+                    if(stmt!=null)
+                        stmt.close();
+                    if(con!=null)
+                        con.close();
+                }
+                catch(Exception ex) {
+                    System.out.println(ex.toString());
+                }
+
+            }
+            
             out.println("<h3>Current Loyalty points: " + loyaltyPoint +" points.</h3>");
             out.println("<a href=\"index.jsp\"><p>Go Back to home page</p></a>");
             out.println("</center>");
@@ -69,7 +116,11 @@ public class enquiryPointServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(enquiryPointServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -83,7 +134,11 @@ public class enquiryPointServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(enquiryPointServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
