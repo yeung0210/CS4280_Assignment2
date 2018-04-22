@@ -4,14 +4,17 @@
     Author     : cyeung234
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" import= "java.util.*"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>CS4280 Internet Bookstore - Admin</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+    <center><h1>CS4280 Internet Bookstore</h1></center>
+        <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
+        <p style="float: right; padding-right: 50px;">Welcome Book Manager!</p>
     </body>
 </html>
