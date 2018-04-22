@@ -34,8 +34,8 @@ public class handleLoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         
-        String username_test = "test";
-        String password_test = "test";
+        String username_admin = "admin";
+        String password_admin = "admin";
         
         String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad044_db";
         String dbLoginId = "aiad044";
@@ -52,78 +52,94 @@ public class handleLoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection(url, dbLoginId, dbPwd);
-            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            if (con != null && !con.isClosed())
-            {
-                strSQL = "SELECT * FROM [Member] WHERE [Member_Username] = '" + input_username + "'";
-                rs = stmt.executeQuery(strSQL);
-                if(!rs.next()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>CS4280 Internet Bookstore - Login Failed</title>");            
-                    out.println("</head>");
-                    out.println("<body><br><br><br>");
-                    out.println("<center><h1>Login Failed</h1>");
-                    out.println("<h3>Unknonwn problem!</h3>");
-                    out.println("<a href=\"index.jsp\"><p>Click here to login again</p></a>");
-                    out.println("</body>");
-                    out.println("</html>");
-                } 
-                else if(!rs.getString("Member_Password").equals(input_password)) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>CS4280 Internet Bookstore - Login Failed</title>");            
-                    out.println("</head>");
-                    out.println("<body><br><br><br>");
-                    out.println("<center><h1>Login Failed</h1>");
-                    out.println("<h3>Invalid username or password!</h3>");
-                    out.println("<a href=\"index.jsp\"><p>Click here to login again</p></a>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
-                else {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("username", input_username);
-                    session.setAttribute("shoppingCart", null);
-                    
-                    int points = rs.getInt("Member_Points");
-                    session.setAttribute("loyaltyPoint", points);
-                    
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>CS4280 Internet Bookstore - Sucessful Login</title>");            
-                    out.println("</head>");
-                    out.println("<body><br><br><br>");
-                    out.println("<center><h1>Sucessful Login</h1>");
-                    out.println("<h3>Welcome " + input_username + " !</h3>");
-                    out.println("<p>The website will return to index page very soon!</p>");
-                    out.println("</body>");
-                    out.println("</html>");
-                    response.setHeader("Refresh", "2; URL=index.jsp");
-                }
-            }
-        } catch(ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
-        } catch(SQLException sqlex) { 
-            sqlex.printStackTrace();
-            throw sqlex;
-        } finally {
+        if (input_username.equals(username_admin) && input_password.equals(password_admin)) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>CS4280 Internet Bookstore - Sucessful Login</title>");            
+            out.println("</head>");
+            out.println("<body><br><br><br>");
+            out.println("<center><h1>Sucessful Login</h1>");
+            out.println("<h3>Welcome " + input_username + " !</h3>");
+            out.println("<p>The website will return to index page very soon!</p>");
+            out.println("</body>");
+            out.println("</html>");
+            response.setHeader("Refresh", "2; URL=admin.jsp");
+        } 
+        else {
             try {
-                if(rs!=null)
-                    rs.close();
-                if(stmt!=null)
-                    stmt.close();
-                if(con!=null)
-                    con.close();
-            }
-            catch(Exception ex) {
-                System.out.println(ex.toString());
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                con = DriverManager.getConnection(url, dbLoginId, dbPwd);
+                stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                if (con != null && !con.isClosed())
+                {
+                    strSQL = "SELECT * FROM [Member] WHERE [Member_Username] = '" + input_username + "'";
+                    rs = stmt.executeQuery(strSQL);
+                    if(!rs.next()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>CS4280 Internet Bookstore - Login Failed</title>");            
+                        out.println("</head>");
+                        out.println("<body><br><br><br>");
+                        out.println("<center><h1>Login Failed</h1>");
+                        out.println("<h3>Account does not exist!</h3>");
+                        out.println("<a href=\"index.jsp\"><p>Click here to login again</p></a>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    } 
+                    else if(!rs.getString("Member_Password").equals(input_password)) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>CS4280 Internet Bookstore - Login Failed</title>");            
+                        out.println("</head>");
+                        out.println("<body><br><br><br>");
+                        out.println("<center><h1>Login Failed</h1>");
+                        out.println("<h3>Invalid username or password!</h3>");
+                        out.println("<a href=\"index.jsp\"><p>Click here to login again</p></a>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                    else {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("username", input_username);
+                        session.setAttribute("shoppingCart", null);
+
+                        int points = rs.getInt("Member_Points");
+                        session.setAttribute("loyaltyPoint", points);
+
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>CS4280 Internet Bookstore - Sucessful Login</title>");            
+                        out.println("</head>");
+                        out.println("<body><br><br><br>");
+                        out.println("<center><h1>Sucessful Login</h1>");
+                        out.println("<h3>Welcome " + input_username + " !</h3>");
+                        out.println("<p>The website will return to index page very soon!</p>");
+                        out.println("</body>");
+                        out.println("</html>");
+                        response.setHeader("Refresh", "2; URL=index.jsp");
+                    }
+                }
+            } catch(ClassNotFoundException cnfe) {
+                cnfe.printStackTrace();
+            } catch(SQLException sqlex) { 
+                sqlex.printStackTrace();
+                throw sqlex;
+            } finally {
+                try {
+                    if(rs!=null)
+                        rs.close();
+                    if(stmt!=null)
+                        stmt.close();
+                    if(con!=null)
+                        con.close();
+                }
+                catch(Exception ex) {
+                    System.out.println(ex.toString());
+                }
             }
         }
     }
