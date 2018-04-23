@@ -50,6 +50,7 @@
                                    String name = rs.getString("Book_name");
                                    String author = rs.getString("Book_Author");
                                    Double price = rs.getDouble("Book_Price");
+                                   int quantity = rs.getInt("Book_Quantity");
                     %>
                     <tr>
                         <td style="padding: 20px;">
@@ -62,6 +63,7 @@
                                 <h4><%=name%></h4>
                                 <p><%=author%></p>
                                 <p>$<%=price%></p>
+                                <p>Quantity: <%=quantity%></p>
                                 <input type="submit" value="Modify Book Details" />
                                 <input type="submit" value="Delete Book" />
                                 </span>

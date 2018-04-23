@@ -52,7 +52,6 @@ public class confirmCheckoutServlet extends HttpServlet {
         Statement stmt = null;
         ResultSet rs = null;
         String strSQLUpdate = null;
-        String strSQLInsert = null;
         
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -60,6 +59,9 @@ public class confirmCheckoutServlet extends HttpServlet {
             Double totalPriceConfirmed;
             totalPriceConfirmed = Double.parseDouble(request.getParameter("totalPrice"));
             String orderID = "";
+            
+            shoppingCart cart;
+            cart = (shoppingCart)session.getAttribute("shoppingCart");
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -103,15 +105,22 @@ public class confirmCheckoutServlet extends HttpServlet {
                 {
                     strSQLUpdate = "UPDATE [Member] SET [Member_Points] = " + currentPoints + " WHERE [Member_Username] = '" + currentMember +"'";
                     stmt.executeUpdate(strSQLUpdate);
-                    PreparedStatement statement = con.prepareStatement("INSERT INTO [Order] VALUES('" + orderID + "', '" + currentMember + "', ?, " + totalPriceConfirmed + ", " + usedPoint + ")");
-                    shoppingCart cart;
-                    cart = (shoppingCart)session.getAttribute("shoppingCart");
+                    PreparedStatement statementInsert = con.prepareStatement("INSERT INTO [Order] VALUES('" + orderID + "', '" + currentMember + "', ?, " + totalPriceConfirmed + ", " + usedPoint + ")");
+                    
                     for (int i = 0; i < cart.itemNum(); i++) {
                         Item currentItem = (Item)cart.getItemsOrdered().get(i);
-                        statement.setString(1, currentItem.getBookID());
-                        statement.executeUpdate();
+                        statementInsert.setString(1, currentItem.getBookID());
+                        statementInsert.executeUpdate();
+                        
                     }
                 }
+                PreparedStatement statementUpdate = con.prepareStatement("UPDATE [Book] SET [Book_Quantity] = ([Book_Quantity] -1) WHERE [Book_ID] = ?");
+                for (int i = 0; i < cart.itemNum(); i++) {
+                    Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                    statementUpdate.setString(1, currentItem.getBookID());
+                    statementUpdate.executeUpdate();
+                }
+                
             } catch(ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();
             } catch(SQLException sqlex) { 
