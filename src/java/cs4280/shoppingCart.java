@@ -27,5 +27,9 @@ public class shoppingCart {
         itemsOrdered.add(order);
     }
     
+    public int itemNum() {
+        return itemsOrdered.size();
+    }
+    
     
 }

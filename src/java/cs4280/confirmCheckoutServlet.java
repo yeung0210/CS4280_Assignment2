@@ -103,8 +103,14 @@ public class confirmCheckoutServlet extends HttpServlet {
                 {
                     strSQLUpdate = "UPDATE [Member] SET [Member_Points] = " + currentPoints + " WHERE [Member_Username] = '" + currentMember +"'";
                     stmt.executeUpdate(strSQLUpdate);
-                    strSQLInsert = "INSERT INTO [Order] VALUES('" + orderID + "', '" + currentMember + "', " + totalPriceConfirmed + ", " + currentPoints + ")";
-                    stmt.executeUpdate(strSQLInsert);
+                    PreparedStatement statement = con.prepareStatement("INSERT INTO [Order] VALUES('" + orderID + "', '" + currentMember + "', ?, " + totalPriceConfirmed + ", " + usedPoint + ")");
+                    shoppingCart cart;
+                    cart = (shoppingCart)session.getAttribute("shoppingCart");
+                    for (int i = 0; i < cart.itemNum(); i++) {
+                        Item currentItem = (Item)cart.getItemsOrdered().get(i);
+                        statement.setString(1, currentItem.getBookID());
+                        statement.executeUpdate();
+                    }
                 }
             } catch(ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();
