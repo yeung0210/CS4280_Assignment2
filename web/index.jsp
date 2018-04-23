@@ -129,7 +129,7 @@
                             stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                             if (con != null && !con.isClosed())
                             {
-                                strSQL = "SELECT * FROM [Book]";
+                                strSQL = "SELECT * FROM [Book] WHERE [Book_Quantity] > 0";
                                 rs = stmt.executeQuery(strSQL);
                                 while (rs.next()) {
                                    String id = rs.getString("Book_ID");
@@ -139,7 +139,7 @@
                     %>
                     <tr>
                         <td style="padding: 20px;">
-                            <form action="shoppingCartServlet">
+                            <form action="shoppingCartServlet" name="cartForm">
                                 <input type="hidden" name="bookID" value="<%=id%>">
                                 <input type="hidden" name="bookName" 
                                        value="<%=name%>" />
@@ -150,7 +150,7 @@
                                 <p>$<%=price%></p>
                                 <a href="" style="font-size: 10px"><p>View Detail</p></a>
                                 <span style="float: right;"><h5>Number of Items: <input type="text" size="4" name="bookQuantity" value="1" /></h5>
-                                <input type="submit" value="Add to Shopping Cart" />
+                                    <input type="submit" value="Add to Shopping Cart" />
                                 </span>
                             </form>
                         </td>  
