@@ -74,7 +74,7 @@
                         <tr><td><%=currentItem.getBookName()%></td>
                         <td><%=currentItem.getBookAuthor()%></td>
                         <td><%=currentItem.getBookQuantity()%></td>
-                        <td><%=formatter.format(currentItem.getBookPrice() * currentItem.getBookQuantity()) %></td></tr>
+                        <td>$<%=formatter.format(currentItem.getBookPrice() * currentItem.getBookQuantity()) %></td></tr>
                 <%
                     }
                     int usedPoints = 0;
@@ -83,7 +83,7 @@
                 %>
                         <tr><td colspan=2>Loyalty point</td>
                         <td><%=usedPoints %></td>
-                        <td>-<%=usedPoints %></td></tr>
+                        <td>-$<%=usedPoints %></td></tr>
                 <%
                     }
                 %>
@@ -126,7 +126,7 @@
                         if(session_username == null) {
                     %>
                             User: Guest
-                            <br>"
+                            <br>
                     <%
                         }
                         else 
@@ -143,8 +143,8 @@
                     Expire Date: 
                     <input type="text" name="creditCardExpireMonth" size='2'/> / <input type="text" name="creditCardExpireYear" size='4'/><br>
                     CVV:
-                     <input type="text" name="creditCardCVV" size='2'/><br>
-                     <a href="javascript:checkPaymentField()"><input type="submit" value="Confirm"></a>
+                    <input type="text" name="creditCardCVV" size='2'/><br>
+                    <a href="javascript:checkPaymentField()"><input type="submit" value="Confirm"></a>
                 </form>
             </fieldset>
             <script>

@@ -21,7 +21,7 @@
         %>
             <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
             <a href="shoppingCartServlet"><p style="float: right; padding-right: 50px;">Shopping Cart</p></a>
-            <p style="float: right; padding-right: 50px;">Welcome<%=session_username %></p>
+            <p style="float: right; padding-right: 50px;">Welcome <%=session_username %></p>
 
         
         <center>
@@ -31,15 +31,24 @@
                       border-radius: 15px;
                       padding: 20px;
                       margin: 50px;">
-                <form action="requestRefundServlet" method="POST" id="refundForm">
+                <form action="requestRefundServlet" method="POST" id="refundForm" onsubmit="return checkRequestField()" name="requestForm">
                     <h4>Refund Form</h4>
                     Order ID: <input type="text" name="orderID" /><br>
                     How much do you want to refund: <input type="text" name="refundValue" /><br>
                     Reason: <br>
                     <textarea rows="4" cols="50" name="reason" form="refundForm"></textarea><br>
-                    <input type="submit" value="Submit" />
+                    <a href="javascript:checkPaymentField()"><input type="submit" value="Submit" /></a>
                 </form>
             </fieldset>
+            <script>
+                function checkRequestField() {
+                     if((requestForm.orderID.value == "") || (requestForm.refundValue.value == "") || (requestForm.reason.value == ""))
+                     {
+                             window.alert("Please fill in all required infomation."); 
+                             return false;
+                     } 
+                 }
+            </script>
         </center>
     </body>
 </html>

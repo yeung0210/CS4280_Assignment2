@@ -120,7 +120,7 @@ public class shoppingCartServlet extends HttpServlet {
                     out.println("<tr><td>" + currentItem.getBookName() + "</td>");
                     out.println("<td>" + currentItem.getBookAuthor() + "</td>");
                     out.println("<td>" + currentItem.getBookQuantity() + "</td>");
-                    out.println("<td>" + formatter.format(currentItem.getBookPrice() * currentItem.getBookQuantity()) + "</td></tr>");
+                    out.println("<td>$" + formatter.format(currentItem.getBookPrice() * currentItem.getBookQuantity()) + "</td></tr>");
                 }
                 out.println("</table>");
                 out.println("<h4>Total: $");
