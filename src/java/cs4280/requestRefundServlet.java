@@ -71,7 +71,7 @@ public class requestRefundServlet extends HttpServlet {
                 stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 if (con != null && !con.isClosed() && currentMember != null)
                 {
-                  strSQL = "SELECT * FROM [Order]";
+                  strSQL = "SELECT * FROM [Orders]";
                   rs = stmt.executeQuery(strSQL);
                   rsmd = rs.getMetaData();
                   rs.last();
@@ -79,7 +79,7 @@ public class requestRefundServlet extends HttpServlet {
                   boolean exist = false;
                   for (int j = 1; j <= numberOfRows; j++) {
                       rs.absolute(j);
-                      if (rs.getString("Order_ID").equals(input_OrderID)) {
+                      if ((rs.getString("Order_ID").equals(input_OrderID)) && (rs.getString("Member_Username").equals(currentMember))) {
                           exist = true;
                       }
                   }
@@ -91,7 +91,7 @@ public class requestRefundServlet extends HttpServlet {
                         requestID += c;
                     }
                     strSQLInsert = "INSERT INTO [Request] VALUES('" + requestID + "', '" + input_OrderID + "', " + input_refund_value + 
-                          ", '" + input_reason + "', 'N')";
+                          ", '" + input_reason + "', 'X')";
                     stmt.executeUpdate(strSQLInsert);      
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");

@@ -36,6 +36,10 @@
         <servlet-name>requestRefundServlet</servlet-name>
         <servlet-class>cs4280.requestRefundServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>authorizeRequestServlet</servlet-name>
+        <servlet-class>cs4280.authorizeRequestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -67,6 +71,10 @@
     <servlet-mapping>
         <servlet-name>requestRefundServlet</servlet-name>
         <url-pattern>/requestRefundServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>authorizeRequestServlet</servlet-name>
+        <url-pattern>/authorizeRequestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

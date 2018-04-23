@@ -60,7 +60,7 @@ public class handleLoginServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body><br><br><br>");
             out.println("<center><h1>Sucessful Login</h1>");
-            out.println("<h3>Welcome " + input_username + " !</h3>");
+            out.println("<h3>Welcome book manager!</h3>");
             out.println("<p>The website will return to index page very soon!</p>");
             out.println("</body>");
             out.println("</html>");

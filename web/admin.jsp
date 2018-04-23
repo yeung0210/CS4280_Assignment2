@@ -16,6 +16,7 @@
     <center><h1>CS4280 Internet Bookstore</h1>
     
         <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
+        <a href="authorizeRequest.jsp"><p style="float: right; padding-right: 50px;"> Authorize Refund Request</p></a>
         <p style="float: right; padding-right: 50px;">Welcome Book Manager!</p>
         
         <div style="margin: 50px; padding: 20px;">

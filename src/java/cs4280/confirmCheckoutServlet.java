@@ -66,7 +66,7 @@ public class confirmCheckoutServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>CS4280 Internet Bookstore - Confirm Ordert</title>");            
+            out.println("<title>CS4280 Internet Bookstore - Confirm Order</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<body><br><br><br>");
@@ -105,11 +105,12 @@ public class confirmCheckoutServlet extends HttpServlet {
                 {
                     strSQLUpdate = "UPDATE [Member] SET [Member_Points] = " + currentPoints + " WHERE [Member_Username] = '" + currentMember +"'";
                     stmt.executeUpdate(strSQLUpdate);
-                    PreparedStatement statementInsert = con.prepareStatement("INSERT INTO [Order] VALUES('" + orderID + "', '" + currentMember + "', ?, " + totalPriceConfirmed + ", " + usedPoint + ")");
+                    PreparedStatement statementInsert = con.prepareStatement("INSERT INTO [Orders] VALUES('" + orderID + "', '" + currentMember + "', ?, ?," + totalPriceConfirmed + ", " + usedPoint + ")");
                     
                     for (int i = 0; i < cart.itemNum(); i++) {
                         Item currentItem = (Item)cart.getItemsOrdered().get(i);
                         statementInsert.setString(1, currentItem.getBookID());
+                        statementInsert.setInt(2, currentItem.getBookQuantity());
                         statementInsert.executeUpdate();
                         
                     }
