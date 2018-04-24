@@ -82,8 +82,6 @@
                 } catch(SQLException sqlex) { 
                     sqlex.printStackTrace();
                     throw sqlex;
-                } catch (NullPointerException ne) {
-                    out.println("Error!");
                 } finally {
                     try {
                         if(rs!=null)
@@ -99,5 +97,7 @@
 
                 }
             %>
+            <br><br>
+            <a href="authorizeRequest.jsp">View Request</a>
     </body>
 </html>

@@ -67,10 +67,30 @@
                    Refund Value: $<%=refund_value%><br>
                    Reason: <%=request_reason%> 
                 </p>
-                <form action="viewOrderRequested.jsp" method="POST" id="viewOrder">
-                    <input type="hidden" name="orderID" value="<%=order_id%>" />
-                    <a href="javascript:;" onclick="document.getElementById('viewOrder').submit();">View Order</a>
-                </form>
+                
+                    
+                    
+                    
+                    <p>Approve? 
+                        <form action="handleRequestServlet" method="POST" >
+                            <input type="hidden" name="requestID" value="<%=request_id%>" />
+                            <input type="hidden" name="answer" value="Y" />
+                            <input type="submit" value="YES">
+                        </form>
+                        <form action="handleRequestServlet" method="POST" >
+                            <input type="hidden" name="answer" value="N" />
+                            <input type="hidden" name="requestID" value="<%=request_id%>" />
+                            <input type="submit" value="NO">
+                        </form>
+                    </p>
+                        <span style="float: right;">
+                        <form action="viewOrderRequested.jsp" method="POST" id="viewOrder">
+                            <input type="hidden" name="orderID" value="<%=order_id%>" />
+                            <a href="javascript:;" onclick="document.getElementById('viewOrder').submit();">View Order</a>
+                        </form>
+                        
+                    </span>
+                <br><br>
                 
             <%
                             

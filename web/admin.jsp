@@ -17,11 +17,12 @@
     
         <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
         <a href="authorizeRequest.jsp"><p style="float: right; padding-right: 50px;"> Authorize Refund Request</p></a>
+        <a href=""><p style="float: right; padding-right: 50px;"> Add Book</p></a>
         <p style="float: right; padding-right: 50px;">Welcome Book Manager!</p>
         
         <div style="margin: 50px; padding: 20px;">
             <table style="padding: 20px;
-                   width: 800px;
+                   width: 500px;
                    margin-top: 50px;
                    border: 1px dotted #000000;
                    border-radius: 15px;">
