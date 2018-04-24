@@ -56,20 +56,33 @@
                     %>
                     <tr>
                         <td style="padding: 20px;">
-                            <form action="">
+                            <h4><%=name%></h4>
+                            <p><%=author%></p>
+                            <p>$<%=price%></p>
+                            <p>Quantity: <%=quantity%></p>
+                            <form action="" method="POST">
                                 <input type="hidden" name="bookID" value="<%=id%>">
-                                <input type="hidden" name="bookName" 
-                                       value="<%=name%>" />
+                                <input type="hidden" name="bookName" value="<%=name%>" />
                                 <input type="hidden" name="bookAuthor" value="<%=author%>" />
                                 <input type="hidden" name="bookPrice" value="<%=price%>" />
-                                <h4><%=name%></h4>
-                                <p><%=author%></p>
-                                <p>$<%=price%></p>
-                                <p>Quantity: <%=quantity%></p>
                                 <input type="submit" value="Modify Book Details" />
-                                <input type="submit" value="Delete Book" />
-                                </span>
                             </form>
+                            <br>
+                            <form action="deleteBookServlet" method="POST" onsubmit="return confirmDelete()">
+                                <input type="hidden" name="bookID" value="<%=id%>">
+                                <input type="submit" value="Delete Book" />
+                            </form>
+                                <script>
+                                    function confirmDelete() {
+                                        var r = confirm("Are you sure to delete the book?");
+                                        if (r) {
+                                            return true;
+                                        }
+                                        else {
+                                            return false;
+                                        }
+                                    }
+                                </script>
                         </td>  
                     </tr>  
                     

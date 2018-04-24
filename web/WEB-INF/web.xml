@@ -44,6 +44,10 @@
         <servlet-name>handleRequestServlet</servlet-name>
         <servlet-class>cs4280.handleRequestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteBookServlet</servlet-name>
+        <servlet-class>cs4280.deleteBookServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -83,6 +87,10 @@
     <servlet-mapping>
         <servlet-name>handleRequestServlet</servlet-name>
         <url-pattern>/handleRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteBookServlet</servlet-name>
+        <url-pattern>/deleteBookServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
