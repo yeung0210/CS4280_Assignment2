@@ -75,7 +75,7 @@ public class confirmCheckoutServlet extends HttpServlet {
                 
                 for (int i = 0; i < 6; i++) {
                     Random r = new Random();
-                    char c = (char)(r.nextInt(26) + 'a');  
+                    char c = (char)(r.nextInt(26) + 'A');  
                     orderID += c;
                 }
 
