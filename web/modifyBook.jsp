@@ -25,15 +25,17 @@
                       border-radius: 15px;
                       padding: 20px;
                       margin: 50px;">
-                <form action="addBookServlet" method="POST" id="addBookForm">
-                    <h4>Add Book Form</h4>
-                    Book Name: <input type="text" name="bookName" /><br>
-                    Book Author: <input type="text" name="bookAuthor" /><br>
+
+                <form action="modifyBookServlet" method="POST" id="modifyBookForm">
+                    <h4>Modify Book Form</h4>
+                    <input type="hidden" name="bookID" value="<%=request.getParameter("bookID")%>">
+                    Book Name: <input type="text" name="bookName" value="<%=request.getParameter("bookName") %>" /><br>
+                    Book Author: <input type="text" name="bookAuthor" value="<%=request.getParameter("bookAuthor") %>" /><br>
                     Description: <br>
-                    <textarea rows="4" cols="50" name="bookDescription" form="addBookForm"></textarea><br>
-                    Book Price: <input type="text" name="bookPrice" /><br>
-                    Available Quantity: <input type="text" name="bookQuantity" /><br>
-                    <input type="submit" value="Add">
+                    <textarea rows="4" cols="50" name="bookDescription" form="modifyBookForm"><%=request.getParameter("bookDescription") %></textarea><br>
+                    Book Price: <input type="text" name="bookPrice" value="<%=request.getParameter("bookPrice") %>"/><br>
+                    Available Quantity: <input type="text" name="bookQuantity" value="<%=request.getParameter("bookQuantity") %>"/><br>
+                    <input type="submit" value="Modify">
                 </form>
             </fieldset>
         </center>

@@ -23,6 +23,12 @@
     </head>
     <body>
         <center><h1>CS4280 Internet Bookstore</h1>
+        <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
+        <a href="authorizeRequest.jsp"><p style="float: right; padding-right: 50px;"> Authorize Refund Request</p></a>
+        <a href="addBook.jsp"><p style="float: right; padding-right: 50px;"> Add Book</p></a>
+        <a href="admin.jsp"><p style="float: right; padding-right: 50px;"> Home</p></a>
+        <p style="float: right; padding-right: 50px;">Welcome Book Manager!</p>
+        <br><br>
             <fieldset style="line-height: 2em;
                       width: 500px;
                       border: 1px dotted #000000;

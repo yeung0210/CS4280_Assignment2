@@ -87,24 +87,11 @@
                     }
                 </script>
             </fieldset>
-            <fieldset style="width: 150px; line-height: 2em;
-                      border: 1px dotted #000000;
-                      border-radius: 15px;
-                      padding: 20px;
-                      margin: 50px;">
-                <h3>Book Categories</h3>
-                <ul>
-                    <li>Category 1</li>
-                    <li>Category 2</li>
-                    <li>Category 3</li>
-                    <li>Category 4</li>
-                    <li>Category 5</li>
-                </ul>          
-            </fieldset>
+   
         </div>
         
-        <div style="float: left; margin: 50px; padding: 20px;">
-            <p>Search Book: <input type="text" size="100" name="search_name" /></p>
+        <div style="float: left; margin: 20px; padding: 20px;">
+           
             <table style="padding: 20px;
                    width: 800px;
                    margin-top: 50px;

@@ -18,7 +18,9 @@
         <a href="handleLogoutServlet"><p style="float: right; padding-right: 50px;">Logout</p></a>
         <a href="authorizeRequest.jsp"><p style="float: right; padding-right: 50px;"> Authorize Refund Request</p></a>
         <a href="addBook.jsp"><p style="float: right; padding-right: 50px;"> Add Book</p></a>
+        <a href="admin.jsp"><p style="float: right; padding-right: 50px;"> Home</p></a>
         <p style="float: right; padding-right: 50px;">Welcome Book Manager!</p>
+        <br><br>
         
         <div style="margin: 50px; padding: 20px;">
             <table style="padding: 20px;
@@ -51,6 +53,7 @@
                                    String id = rs.getString("Book_ID");
                                    String name = rs.getString("Book_name");
                                    String author = rs.getString("Book_Author");
+                                   String description = rs.getString("Book_Description");
                                    Double price = rs.getDouble("Book_Price");
                                    int quantity = rs.getInt("Book_Quantity");
                     %>
@@ -60,11 +63,13 @@
                             <p><%=author%></p>
                             <p>$<%=price%></p>
                             <p>Quantity: <%=quantity%></p>
-                            <form action="" method="POST">
+                            <form action="modifyBook.jsp" method="POST">
                                 <input type="hidden" name="bookID" value="<%=id%>">
                                 <input type="hidden" name="bookName" value="<%=name%>" />
                                 <input type="hidden" name="bookAuthor" value="<%=author%>" />
+                                <input type="hidden" name="bookDescription" value="<%=description%>" />
                                 <input type="hidden" name="bookPrice" value="<%=price%>" />
+                                <input type="hidden" name="bookQuantity" value="<%=quantity%>" />
                                 <input type="submit" value="Modify Book Details" />
                             </form>
                             <br>

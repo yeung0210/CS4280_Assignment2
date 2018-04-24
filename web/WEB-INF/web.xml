@@ -52,6 +52,10 @@
         <servlet-name>addBookServlet</servlet-name>
         <servlet-class>cs4280.addBookServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>modifyBookServlet</servlet-name>
+        <servlet-class>cs4280.modifyBookServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handleLoginServlet</servlet-name>
         <url-pattern>/handleLoginServlet</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>addBookServlet</servlet-name>
         <url-pattern>/addBookServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modifyBookServlet</servlet-name>
+        <url-pattern>/modifyBookServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
