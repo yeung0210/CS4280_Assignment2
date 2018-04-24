@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cyeung234
  */
-public class deleteBookServlet extends HttpServlet {
+public class addBookServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +36,7 @@ public class deleteBookServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
         String url = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad044_db";
         String dbLoginId = "aiad044";
         String dbPwd = "aiad044";
@@ -43,14 +45,28 @@ public class deleteBookServlet extends HttpServlet {
         Statement stmt = null;
         ResultSet rs = null;
         String strSQL = null;
-        String book_id = request.getParameter("bookID");
+        
+        String book_id = "B";
+        for (int i = 0; i < 3; i++) {
+            Random r = new Random();
+            char c = (char)(r.nextInt(10) + '0');  
+            book_id += c;
+        }
+        String book_name = request.getParameter("bookName");
+        String book_author = request.getParameter("bookAuthor");
+        String book_description = request.getParameter("bookDescription");
+        Double book_price;
+        book_price = Double.parseDouble(request.getParameter("bookPrice"));
+        int book_quantity;
+        book_quantity = Integer.parseInt(request.getParameter("bookQuantity"));
         
         try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 con = DriverManager.getConnection(url, dbLoginId, dbPwd);
                 stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 if (con != null && !con.isClosed()) {
-                    strSQL = "DELETE FROM [Book] WHERE [Book_ID] = '" + book_id + "'";
+                    strSQL = "INSERT INTO [Book] VALUES ('" + book_id + "', '" + book_name + "', '" + book_author + "', '" + 
+                            book_description + "', " + book_price + ", " + book_quantity + ")";
                     stmt.executeUpdate(strSQL);
                 }
             } catch(ClassNotFoundException cnfe) {
@@ -72,7 +88,6 @@ public class deleteBookServlet extends HttpServlet {
 
             }
         
-        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -82,7 +97,7 @@ public class deleteBookServlet extends HttpServlet {
             out.println("<title>CS4280 Internet Bookstore - Delete Book</title>");            
             out.println("</head>");
             out.println("<body><br><br><br>");
-            out.println("<center><h1>Delete Book Successfully!</h1>");
+            out.println("<center><h1>Add Book Successfully!</h1>");
             out.println("<p>The website will return to index page very soon!</p>");
             out.println("</body>");
             out.println("</html>");

@@ -24,7 +24,7 @@
     <body>
         <center><h1>CS4280 Internet Bookstore</h1>
             <fieldset style="line-height: 2em;
-                      width: 800px;
+                      width: 500px;
                       border: 1px dotted #000000;
                       text-align: left;
                       border-radius: 15px;
